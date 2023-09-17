@@ -1,0 +1,22 @@
+0x00	addi $ra, $ra, 0
+0x04	jal 0x0c
+0x08	nop
+0x0c	addi $t0, $t1, 12
+0x10	addi $t1, $t2, 4
+0x14	addi $t3, $zero, 0
+0x18	addi $t3, $ra, $zero		#$t3 should contain $ra value 0x08
+0x1c	addi $ra, $ra, 0
+0x20	jal 0x24
+0x24	addi $t0, $ra, 0		#wrong read $ra register, ForwardAE should be 3
+0x28	jal 0x2c
+0x2c	add $t0, $t0, $ra		#wrong read $ra register, ForwardBE should be 3
+0x30	addi $t2, $zero, 4
+0x34	jal 0x44
+0x38	add $t0, $t1, $t2		#this wont fetch
+0x3c	add $t1, $t0, $t2		#this wont fetch
+0x40	add $t2, $t1, $t0		#this wont fetch
+0x44	addi $t0, $zero, 1		#this fetch
+0x48	jal 0x50
+0x4c	addi $t1, $zero, 1		#this wont fetch
+0x50	addi $t2, $zero, 1
+0x54	beq $t2, $t0, 0			#loop here
